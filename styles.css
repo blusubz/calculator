@@ -6,7 +6,17 @@
     box-sizing: border-box;
 }
 
+body {
+    background-color: black;
+    color: white;
+}
+
 
 h1 {
-    border: 2px solid blue;
+    border: 2px solid red;
+}
+
+button {
+    padding: 18px;
+    font-size: 20px;
 }

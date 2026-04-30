@@ -37,6 +37,14 @@ function screenDisplay(screenDisplay) {
 }
 
 // Calculator logic 
+/* 
+1. check if button is pressed // create two routes
+- if digit 
+- else operator
+2. If it's a digit 
+- If it's digit then we store as a number in string until we reach a operator. If we reach operator then we store the number (still as as string and we parse later)
+3. Else it's operator (check for equal sign in operate function)  
+*/
 btn.addEventListener('click', (event) => {
     // if button is clicked (this avoids clicking anything else inside the div that isn't a button)
     if (event.target.tagName === 'BUTTON') {
