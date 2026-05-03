@@ -56,16 +56,22 @@ function screenDisplay(screenDisplay) {
 btn.addEventListener('click', (event) => {
     // if button is clicked (this avoids clicking anything else inside the div that isn't a button)
     if (event.target.tagName === 'BUTTON') {
+        let onScreen = '';
         let btnSelection = event.target.value; // a button was clicked and stored
         selection += btnSelection;
+        onScreen += btnSelection;
+       
 
         if (event.target.classList.contains('digit')) {
-            a = +selection;
-            //console.log(`digit selected: ${selection}`);
+            if (operator === "") {
+                a = +selection;
+            } else {
+                b = +selection;
+            }
         } else if (event.target.classList.contains('operator')) {
             operator = selection.slice(-1);
             selection = "";
-        }
+        } 
 
         // console.log(`selection: ${selection}`);
 
@@ -73,10 +79,10 @@ btn.addEventListener('click', (event) => {
         if (event.target.classList.contains('executor')) {
             operate(operator, a, b);
         } else {
-            screenDisplay(selection);
+            screenDisplay(onScreen);
         }
 
-        // do logic for CLEAR
+        // TODO: do logic for CLEAR
     } 
 });
 
