@@ -4,6 +4,8 @@ let num1 = "";
 let num2 = "";
 let selection = "";
 let operator = "";
+let onScreen = "";
+let result = "";
 let inputsStored = [];
 let btn = document.querySelector('.btnContainer');
 let display = document.querySelector('h1');
@@ -26,14 +28,29 @@ function divide(a, b) {
 }
 
 function operate(operator, a, b) {
-    if (operator === '+') {
-        console.log('ADDING STUB')
-        display.textContent = add(a, b);
-    }
 
+    switch (operator) {
+        case '+':
+            result = add(a, b);
+            break;
+        case '-':
+            result = subtract(a, b);
+            break;
+        case '*':
+            result = multiply(a, b);
+            break;
+        case '/':
+            result = divide(a, b);
+            break;
+        default:
+            return "Error" // Runs if no cases match 
+    }
+    
+    display.textContent = result;
+    
     console.log(`operator: ${operator}`);
-    console.log(`adding a: ${a}`);
-    console.log(`adding b: ${b}`);
+    console.log(`a: ${a}`);
+    console.log(`b: ${b}`);
 }
 
 function digitPressed() {
@@ -56,19 +73,22 @@ function screenDisplay(screenDisplay) {
 btn.addEventListener('click', (event) => {
     // if button is clicked (this avoids clicking anything else inside the div that isn't a button)
     if (event.target.tagName === 'BUTTON') {
-        let onScreen = '';
+        let isDigit = event.target.classList.contains('digit');
+        let isOperator = event.target.classList.contains('operator');
         let btnSelection = event.target.value; // a button was clicked and stored
-        selection += btnSelection;
-        onScreen += btnSelection;
-       
 
-        if (event.target.classList.contains('digit')) {
+        // Concatenate the numbers to be selected
+        selection += btnSelection;
+        // Concatenate the Screen display 
+        onScreen += btnSelection;
+
+        if (isDigit) {
             if (operator === "") {
                 a = +selection;
             } else {
                 b = +selection;
             }
-        } else if (event.target.classList.contains('operator')) {
+        } else if (isOperator) {
             operator = selection.slice(-1);
             selection = "";
         } 
