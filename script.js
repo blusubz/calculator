@@ -1,9 +1,10 @@
 let a = "";
 let b = "";
 let num1 = "";
+let num2 = "";
+let selection = "";
 let operator = "";
 let inputsStored = [];
-
 let btn = document.querySelector('.btnContainer');
 let display = document.querySelector('h1');
 
@@ -25,7 +26,14 @@ function divide(a, b) {
 }
 
 function operate(operator, a, b) {
-    return 0;
+    if (operator === '+') {
+        console.log('ADDING STUB')
+        display.textContent = add(a, b);
+    }
+
+    console.log(`operator: ${operator}`);
+    console.log(`adding a: ${a}`);
+    console.log(`adding b: ${b}`);
 }
 
 function digitPressed() {
@@ -48,38 +56,27 @@ function screenDisplay(screenDisplay) {
 btn.addEventListener('click', (event) => {
     // if button is clicked (this avoids clicking anything else inside the div that isn't a button)
     if (event.target.tagName === 'BUTTON') {
-        let digit = event.target.value; // a button was clicked
-        a += digit;
+        let btnSelection = event.target.value; // a button was clicked and stored
+        selection += btnSelection;
 
-        // check if operator is clicked
-        if (event.target.classList.contains('operator')) {
-            // store a and see to truncate operator
-            // then store operator and next we want to store b
-            a = Number(a.slice(0, -1)); // this completes storing number 1
-            num1 = a;
-
-            operator = event.target.value;
-            console.log(`A: ${a}`);
-            
-            console.log(`Operator: ${operator}`);
-            console.log(typeof a);
-            console.log(typeof operator);
-            
-            // clear display
-            // start accumulating number again 
-             
-            digit = "";
-        } 
-        b += digit
-
-        // check for equal sign to call operate
-        if (event.target.classList.contains('operator') && event.target.id === "=") {
-            console.log(`B: ${b}`);
-            operate(operator, a, b);
+        if (event.target.classList.contains('digit')) {
+            a = +selection;
+            //console.log(`digit selected: ${selection}`);
+        } else if (event.target.classList.contains('operator')) {
+            operator = selection.slice(-1);
+            selection = "";
         }
 
-        console.log(`Num1: ${num1}`);
-        screenDisplay(a);
+        // console.log(`selection: ${selection}`);
+
+        // check for equal sign to call operate and display result on screen 
+        if (event.target.classList.contains('executor')) {
+            operate(operator, a, b);
+        } else {
+            screenDisplay(selection);
+        }
+
+        // do logic for CLEAR
     } 
 });
 
