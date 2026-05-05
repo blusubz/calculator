@@ -1,12 +1,10 @@
 let a = "";
 let b = "";
-let num1 = "";
-let num2 = "";
 let selection = "";
 let operator = "";
 let onScreen = "";
 let result = "";
-let inputsStored = [];
+let currentResult = "";
 let btn = document.querySelector('.btnContainer');
 let display = document.querySelector('h1');
 
@@ -24,7 +22,9 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
-    return a / b;
+    if (b === 0) {
+        return "Error: Division by Zero";
+    } else return a / b;
 }
 
 function operate(operator, a, b) {
@@ -48,9 +48,12 @@ function operate(operator, a, b) {
     
     display.textContent = result;
     
-    console.log(`operator: ${operator}`);
-    console.log(`a: ${a}`);
-    console.log(`b: ${b}`);
+    
+    // console.log(`operator: ${operator}`);
+    // console.log(`a: ${a}`);
+    // console.log(`b: ${b}`);
+
+    return result;
 }
 
 function digitPressed() {
@@ -59,6 +62,16 @@ function digitPressed() {
 
 function screenDisplay(screenDisplay) {
     display.textContent = screenDisplay;
+}
+
+function resetCalculator() {
+    btnSelection = "";
+    selection = "";
+    onScreen = "";
+    a = "";
+    b = "";
+    operator = "";
+    display.textContent = "0";
 }
 
 // Calculator logic 
@@ -75,6 +88,8 @@ btn.addEventListener('click', (event) => {
     if (event.target.tagName === 'BUTTON') {
         let isDigit = event.target.classList.contains('digit');
         let isOperator = event.target.classList.contains('operator');
+        let toExecute = event.target.classList.contains('executor');
+        let toClear = event.target.value === 'clear';
         let btnSelection = event.target.value; // a button was clicked and stored
 
         // Concatenate the numbers to be selected
@@ -82,47 +97,45 @@ btn.addEventListener('click', (event) => {
         // Concatenate the Screen display 
         onScreen += btnSelection;
 
+        // Calculator flow
+        if (toClear) {
+            resetCalculator();
+            return;
+        }
+
         if (isDigit) {
             if (operator === "") {
                 a = +selection;
             } else {
                 b = +selection;
             }
+
         } else if (isOperator) {
+            // if (operator === "") {
+            //     operator = selection.slice(-1);
+            //     currentResult = operate(operator, a, b);
+            //     a = currentResult;
+            // }
+
             operator = selection.slice(-1);
             selection = "";
+
+            // if new operator detected then have operate return value of a,b
+            
+            // console.log('second operator clicked');
+            // console.log(`second operator: ${operator}`);
+
+
+
+            console.log(`current result: ${currentResult}`);
+            console.log(`current result as a: ${a}`);
         } 
 
-        // console.log(`selection: ${selection}`);
-
         // check for equal sign to call operate and display result on screen 
-        if (event.target.classList.contains('executor')) {
+        if (toExecute) {
             operate(operator, a, b);
         } else {
             screenDisplay(onScreen);
         }
-
-        // TODO: do logic for CLEAR
     } 
 });
-
-
-
-
-/* Logic for capturing 1st number then operator then 2nd number
-
-create an array to store up to 3 elements // would this not be dynamic?
-
-1. after every number pressed it adds to the number being created
-2. then we wait until operator is clicked 
-3. do same to create second number
-4. wait for equal sign 
-5. call operate and display(return) calculation 
-
-
-// TODO:
-How do I press a digit and have it make number greater say I want 100, how do I press 1 and then 0 then 0 again and have 100? 
-
-Add value to a string, and keep adding value to string, and wait until operator is selected to stop? 
-
-*/
