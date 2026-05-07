@@ -26,7 +26,7 @@ function multiply(a, b) {
 function divide(a, b) {
     if (b === 0) {
         return "Error: Division by Zero";
-    } else return a / b;
+    } else return (a / b).toFixed(3); // round to 3 decimal places
 }
 
 function operate(operator, a, b) {
