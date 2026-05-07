@@ -1,6 +1,8 @@
 let a = "";
 let b = "";
 let selection = "";
+let prevOperator = "";
+let tempOperator = "";
 let operator = "";
 let onScreen = "";
 let result = "";
@@ -47,8 +49,6 @@ function operate(operator, a, b) {
     }
     
     display.textContent = result;
-    
-    
     // console.log(`operator: ${operator}`);
     // console.log(`a: ${a}`);
     // console.log(`b: ${b}`);
@@ -111,29 +111,35 @@ btn.addEventListener('click', (event) => {
             }
 
         } else if (isOperator) {
-            // if (operator === "") {
-            //     operator = selection.slice(-1);
-            //     currentResult = operate(operator, a, b);
-            //     a = currentResult;
-            // }
-
-            operator = selection.slice(-1);
-            selection = "";
-
-            // if new operator detected then have operate return value of a,b
-            
-            // console.log('second operator clicked');
-            // console.log(`second operator: ${operator}`);
-
-
-
-            console.log(`current result: ${currentResult}`);
-            console.log(`current result as a: ${a}`);
+            if (operator === "") {
+                operator = selection.slice(-1);
+                selection = "";
+                // currentResult = operate(operator, a, b);
+                // a = currentResult;
+                selection = "";
+                prevOperator = operator;
+            } else {
+                // call operate with prevOperator 
+                currentResult = operate(prevOperator, a, b);
+                console.log(`current result: ${currentResult}`);
+                a = currentResult;
+                console.log(`a: ${a}`);
+                operator = selection.slice(-1);
+                selection = "";
+            }
+            // Uncomment below and remove conditionals to have the calculator working for two operands only such as 2+2 = 4 
+            // operator = selection.slice(-1);
+            // selection = "";
         } 
 
         // check for equal sign to call operate and display result on screen 
         if (toExecute) {
+            console.log(`Equals Operator: ${operator}`);
+            console.log(`Equals a: ${a}`);
+            console.log(`Equals b: ${b}`);
             operate(operator, a, b);
+            // onScreen = "";
+            // selection = "";
         } else {
             screenDisplay(onScreen);
         }
