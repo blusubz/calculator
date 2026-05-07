@@ -116,8 +116,14 @@ btn.addEventListener('click', (event) => {
                 selection = "";
                 // currentResult = operate(operator, a, b);
                 // a = currentResult;
-                selection = "";
-                prevOperator = operator;
+                prevOperator = operator; 
+
+                // check for newly entered operator (store and keep newly entered operator)
+                // if (isOperator) {
+                //     operator = selection.slice(-1);
+                //     selection = "";
+
+                // }
             } else {
                 // call operate with prevOperator 
                 currentResult = operate(prevOperator, a, b);
