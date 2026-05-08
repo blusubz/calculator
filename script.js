@@ -98,6 +98,7 @@ btn.addEventListener('click', (event) => {
         if (isDigit) {
             // Concatenate the numbers to be selected
             digit += btnSelection;
+            console.log(`digit: ${digit}`);
             // Concatenate the Screen display 
             onScreen += btnSelection;
 
@@ -106,17 +107,23 @@ btn.addEventListener('click', (event) => {
             } else {
                 b = +digit;
             }
-
         } else if (isOperator) {
+            if (operator !== "") {
+                currentResult = operate(prevOperator, a, b)
+                a = currentResult;
+            }
             operator = btnSelection; 
+            prevOperator = operator;
             onScreen += btnSelection;
             console.log(`op: ${operator}`)
-            } 
+            digit = "";
         } 
-
         // check for equal sign to call operate and display result on screen 
         if (toExecute) {
             operate(operator, a, b);
+            console.log(`op: ${operator}`)
+            console.log(`a: ${a}`)
+            console.log(`b: ${b}`)
         } else {
             screenDisplay(onScreen);
         }
