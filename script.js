@@ -2,14 +2,13 @@ let a = "";
 let b = "";
 let digit = "";
 let prevOperator = "";
-let tempOperator = "";
 let operator = "";
 let onScreen = "";
 let result = "";
 let currentResult = "";
 let btn = document.querySelector('.btnContainer');
 let display = document.querySelector('h1');
-
+let isDone = false;
 
 function add(a, b) {
     return a + b;
@@ -26,7 +25,9 @@ function multiply(a, b) {
 function divide(a, b) {
     if (b === 0) {
         return "Error: Division by Zero";
-    } else return (a / b).toFixed(3); // round to 3 decimal places
+    } else if ((a / b ) % 2 !== 0) {
+        return a / b;
+    } else return (a / b).toFixed(3); // round to 3 decimal places if division is not a whole number 
 }
 
 function operate(operator, a, b) {
@@ -51,10 +52,6 @@ function operate(operator, a, b) {
     display.textContent = result; // for screen display
 
     return result;
-}
-
-function digitPressed() {
-    return 0;
 }
 
 function screenDisplay(screenDisplay) {
@@ -96,9 +93,14 @@ btn.addEventListener('click', (event) => {
         }
 
         if (isDigit) {
+            // check if a new digit is pressed clear calculator 
+            if (isDone) {
+                resetCalculator();
+                isDone = false;
+                return;
+            }
             // Concatenate the numbers to be selected
             digit += btnSelection;
-            console.log(`digit: ${digit}`);
             // Concatenate the Screen display 
             onScreen += btnSelection;
 
@@ -108,22 +110,28 @@ btn.addEventListener('click', (event) => {
                 b = +digit;
             }
         } else if (isOperator) {
-            if (operator !== "") {
+            if (operator === "") { // logic for single operation
+                operator = btnSelection; 
+                prevOperator = operator;
+                onScreen += btnSelection;
+                digit = "";
+            }
+            else if (b === "" && operator !== "") { // logic to check for new operator selection
+                operator = btnSelection;
+                prevOperator = operator;
+                onScreen = a + operator;
+            } else { // logic to chain operations 
                 currentResult = operate(prevOperator, a, b)
                 a = currentResult;
+                onScreen += btnSelection;
+                digit = "";
+                b = ""; // for swapping operator logic
             }
-            operator = btnSelection; 
-            prevOperator = operator;
-            onScreen += btnSelection;
-            console.log(`op: ${operator}`)
-            digit = "";
         } 
         // check for equal sign to call operate and display result on screen 
         if (toExecute) {
             operate(operator, a, b);
-            console.log(`op: ${operator}`)
-            console.log(`a: ${a}`)
-            console.log(`b: ${b}`)
+            isDone = true;
         } else {
             screenDisplay(onScreen);
         }
