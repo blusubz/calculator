@@ -1,6 +1,7 @@
 let a = "";
 let b = "";
 let digit = "";
+let endResult = "";
 let prevOperator = "";
 let operator = "";
 let onScreen = "";
@@ -59,7 +60,7 @@ function screenDisplay(screenDisplay) {
 }
 
 function resetCalculator() {
-    btnSelection = "";
+    // btnSelection = "";
     digit = "";
     onScreen = "";
     a = "";
@@ -94,11 +95,10 @@ btn.addEventListener('click', (event) => {
 
         if (isDigit) {
             // check if a new digit is pressed clear calculator 
-            if (isDone) {
+            if (isDone && isDigit) {
                 resetCalculator();
                 isDone = false;
-                return;
-            }
+            } 
             // Concatenate the numbers to be selected
             digit += btnSelection;
             // Concatenate the Screen display 
@@ -110,6 +110,15 @@ btn.addEventListener('click', (event) => {
                 b = +digit;
             }
         } else if (isOperator) {
+
+            if (isDone) {
+                a = endResult;
+                onScreen += btnSelection;
+                digit = "";
+                b = ""; // for swapping operator logic
+                isDone = false;
+            }
+
             if (operator === "") { // logic for single operation
                 operator = btnSelection; 
                 prevOperator = operator;
@@ -131,6 +140,7 @@ btn.addEventListener('click', (event) => {
         // check for equal sign to call operate and display result on screen 
         if (toExecute) {
             operate(operator, a, b);
+            endResult = operate(operator, a, b);
             isDone = true;
         } else {
             screenDisplay(onScreen);
