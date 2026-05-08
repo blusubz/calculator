@@ -1,6 +1,6 @@
 let a = "";
 let b = "";
-let selection = "";
+let digit = "";
 let prevOperator = "";
 let tempOperator = "";
 let operator = "";
@@ -48,10 +48,7 @@ function operate(operator, a, b) {
             return "Error" // Runs if no cases match 
     }
     
-    display.textContent = result;
-    // console.log(`operator: ${operator}`);
-    // console.log(`a: ${a}`);
-    // console.log(`b: ${b}`);
+    display.textContent = result; // for screen display
 
     return result;
 }
@@ -66,7 +63,7 @@ function screenDisplay(screenDisplay) {
 
 function resetCalculator() {
     btnSelection = "";
-    selection = "";
+    digit = "";
     onScreen = "";
     a = "";
     b = "";
@@ -92,11 +89,6 @@ btn.addEventListener('click', (event) => {
         let toClear = event.target.value === 'clear';
         let btnSelection = event.target.value; // a button was clicked and stored
 
-        // Concatenate the numbers to be selected
-        selection += btnSelection;
-        // Concatenate the Screen display 
-        onScreen += btnSelection;
-
         // Calculator flow
         if (toClear) {
             resetCalculator();
@@ -104,48 +96,27 @@ btn.addEventListener('click', (event) => {
         }
 
         if (isDigit) {
+            // Concatenate the numbers to be selected
+            digit += btnSelection;
+            // Concatenate the Screen display 
+            onScreen += btnSelection;
+
             if (operator === "") {
-                a = +selection;
+                a = +digit;
             } else {
-                b = +selection;
+                b = +digit;
             }
 
         } else if (isOperator) {
-            if (operator === "") {
-                operator = selection.slice(-1);
-                selection = "";
-                // currentResult = operate(operator, a, b);
-                // a = currentResult;
-                prevOperator = operator; 
-
-                // check for newly entered operator (store and keep newly entered operator)
-                // if (isOperator) {
-                //     operator = selection.slice(-1);
-                //     selection = "";
-
-                // }
-            } else {
-                // call operate with prevOperator 
-                currentResult = operate(prevOperator, a, b);
-                console.log(`current result: ${currentResult}`);
-                a = currentResult;
-                console.log(`a: ${a}`);
-                operator = selection.slice(-1);
-                selection = "";
-            }
-            // Uncomment below and remove conditionals to have the calculator working for two operands only such as 2+2 = 4 
-            // operator = selection.slice(-1);
-            // selection = "";
+            operator = btnSelection; 
+            onScreen += btnSelection;
+            console.log(`op: ${operator}`)
+            } 
         } 
 
         // check for equal sign to call operate and display result on screen 
         if (toExecute) {
-            console.log(`Equals Operator: ${operator}`);
-            console.log(`Equals a: ${a}`);
-            console.log(`Equals b: ${b}`);
             operate(operator, a, b);
-            // onScreen = "";
-            // selection = "";
         } else {
             screenDisplay(onScreen);
         }
