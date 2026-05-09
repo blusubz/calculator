@@ -116,11 +116,12 @@ btn.addEventListener('click', (event) => {
                 digit += btnSelection;
                 // Concatenate the Screen display 
                 onScreen += btnSelection;
-            } // TODO: Backspace logic goes here
-            else if (isBackspace) { // Remove to revert
+            } 
+            // TODO: Backspace logic goes here
+            if (isBackspace) { // Remove to revert
                 console.log('BACKSPACE CLICKED')
                 digit = digit.slice(0, -1);
-                console.log(`backspace: ${btnSelected}`);
+                console.log(`backspace: ${digit}`);
             } // REMOVE to revert
 
             if (operator === "") {
