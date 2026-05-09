@@ -7,26 +7,33 @@ let operator = "";
 let onScreen = "";
 let result = "";
 let currentResult = "";
+let decimalCounter = 0;
 let btn = document.querySelector('.btnContainer');
 let display = document.querySelector('h1');
 let isDone = false;
 
 function add(a, b) {
-    return a + b;
+    if ((a + b) % 2 === 0) {
+        return a + b;
+    } else return (a + b).toFixed(3);
 }
 
 function subtract(a, b) {
-    return a - b;
+    if ((a - b) % 2 === 0) {
+        return a - b;
+    } else return (a - b).toFixed(3);
 }
 
 function multiply(a, b) {
-    return a * b;
+    if ((a * b) % 2 === 0) {
+        return a * b;
+    } else return (a * b).toFixed(3);
 }
 
 function divide(a, b) {
     if (b === 0) {
         return "Error: Division by Zero";
-    } else if ((a / b ) % 2 !== 0) {
+    } else if ((a / b ) % 2 === 0) {
         return a / b;
     } else return (a / b).toFixed(3); // round to 3 decimal places if division is not a whole number 
 }
@@ -79,13 +86,16 @@ function resetCalculator() {
 3. Else it's operator (check for equal sign in operate function)  
 */
 btn.addEventListener('click', (event) => {
+    let btnSelected = event.target.tagName === 'BUTTON';
     // if button is clicked (this avoids clicking anything else inside the div that isn't a button)
-    if (event.target.tagName === 'BUTTON') {
+    if (btnSelected) {
         let isDigit = event.target.classList.contains('digit');
         let isOperator = event.target.classList.contains('operator');
         let toExecute = event.target.classList.contains('executor');
+        let isDecimal = event.target.value === '.';
         let toClear = event.target.value === 'clear';
         let btnSelection = event.target.value; // a button was clicked and stored
+        console.log(`button clicked: ${btnSelection}`)
 
         // Calculator flow
         if (toClear) {
@@ -99,10 +109,17 @@ btn.addEventListener('click', (event) => {
                 resetCalculator();
                 isDone = false;
             } 
-            // Concatenate the numbers to be selected
-            digit += btnSelection;
-            // Concatenate the Screen display 
-            onScreen += btnSelection;
+
+
+            // allow only 1 decimal per digit
+            if (!(btnSelection === '.' && digit.includes('.'))) {
+                console.log(`before digit: ${digit}`);
+                // Concatenate the numbers to be selected
+                digit += btnSelection;
+                // Concatenate the Screen display 
+                onScreen += btnSelection;
+                console.log(`digit after: ${digit}`);
+            }
 
             if (operator === "") {
                 a = +digit;
