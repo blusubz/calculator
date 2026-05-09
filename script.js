@@ -67,15 +67,24 @@ function resetCalculator() {
     display.textContent = "0";
 }
 
-// Calculator logic 
-/* 
-1. check if button is pressed // create two routes
-- if digit 
-- else operator
-2. If it's a digit 
-- If it's digit then we store as a number in string until we reach a operator. If we reach operator then we store the number (still as as string and we parse later)
-3. Else it's operator (check for equal sign in operate function)  
-*/
+/**
+ * UI-Driven Calculator Logic
+ * 
+ * STATE TRACKING:
+ * @param {string} a - Stores the first operand (parsed to Number for math).
+ * @param {string} b - Stores the second operand (parsed to Number for math).
+ * @param {string} digit - Temporary buffer for the current number being typed.
+ * @param {string} operator - The current active mathematical operator.
+ * @param {boolean} isDone - Flag to reset state if a digit is pressed after an evaluation.
+ * 
+ * EVENT FLOW:
+ * 1. Listen for clicks on the '.btnContainer' delegated to <button> elements.
+ * 2. If 'digit': Append to current buffer and assign to 'a' or 'b' based on operator presence.
+ * 3. If 'operator': 
+ *    - If 'b' is empty: Update the active operator.
+ *    - If 'b' exists: Perform intermediate calculation (chaining) and set result as new 'a'.
+ * 4. If 'executor' (=): Run the final operation and toggle 'isDone'.
+ */
 btn.addEventListener('click', (event) => {
     let btnSelected = event.target.tagName === 'BUTTON';
     // if button is clicked (this avoids clicking anything else inside the div that isn't a button)
@@ -85,6 +94,7 @@ btn.addEventListener('click', (event) => {
         let toExecute = event.target.classList.contains('executor');
         let isDecimal = event.target.value === '.';
         let toClear = event.target.value === 'clear';
+        let isBackspace = event.target.id === 'backspace';
         let btnSelection = event.target.value; // a button was clicked and stored
 
         // Calculator flow
@@ -106,7 +116,12 @@ btn.addEventListener('click', (event) => {
                 digit += btnSelection;
                 // Concatenate the Screen display 
                 onScreen += btnSelection;
-            }
+            } // TODO: Backspace logic goes here
+            else if (isBackspace) { // Remove to revert
+                console.log('BACKSPACE CLICKED')
+                digit = digit.slice(0, -1);
+                console.log(`backspace: ${btnSelected}`);
+            } // REMOVE to revert
 
             if (operator === "") {
                 a = +digit;
