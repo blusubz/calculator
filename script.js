@@ -13,29 +13,21 @@ let display = document.querySelector('h1');
 let isDone = false;
 
 function add(a, b) {
-    if ((a + b) % 2 === 0) {
-        return a + b;
-    } else return (a + b).toFixed(3);
+    return Number((a + b).toFixed(3));
 }
 
 function subtract(a, b) {
-    if ((a - b) % 2 === 0) {
-        return a - b;
-    } else return (a - b).toFixed(3);
+    return Number((a - b).toFixed(3));
 }
 
 function multiply(a, b) {
-    if ((a * b) % 2 === 0) {
-        return a * b;
-    } else return (a * b).toFixed(3);
+    return Number((a * b).toFixed(3));
 }
 
 function divide(a, b) {
     if (b === 0) {
         return "Error: Division by Zero";
-    } else if ((a / b ) % 2 === 0) {
-        return a / b;
-    } else return (a / b).toFixed(3); // round to 3 decimal places if division is not a whole number 
+    } else return Number((a / b).toFixed(3)); // round to 3 decimal places if division is not a whole number 
 }
 
 function operate(operator, a, b) {
@@ -67,7 +59,6 @@ function screenDisplay(screenDisplay) {
 }
 
 function resetCalculator() {
-    // btnSelection = "";
     digit = "";
     onScreen = "";
     a = "";
@@ -95,7 +86,6 @@ btn.addEventListener('click', (event) => {
         let isDecimal = event.target.value === '.';
         let toClear = event.target.value === 'clear';
         let btnSelection = event.target.value; // a button was clicked and stored
-        console.log(`button clicked: ${btnSelection}`)
 
         // Calculator flow
         if (toClear) {
@@ -104,21 +94,18 @@ btn.addEventListener('click', (event) => {
         }
 
         if (isDigit) {
-            // check if a new digit is pressed clear calculator 
+            // check if a new digit is pressed after result displayed then clear calculator 
             if (isDone && isDigit) {
                 resetCalculator();
                 isDone = false;
             } 
 
-
             // allow only 1 decimal per digit
             if (!(btnSelection === '.' && digit.includes('.'))) {
-                console.log(`before digit: ${digit}`);
                 // Concatenate the numbers to be selected
                 digit += btnSelection;
                 // Concatenate the Screen display 
                 onScreen += btnSelection;
-                console.log(`digit after: ${digit}`);
             }
 
             if (operator === "") {
@@ -127,7 +114,7 @@ btn.addEventListener('click', (event) => {
                 b = +digit;
             }
         } else if (isOperator) {
-
+            // If computation started (by clicking new operator) after having a result displayed
             if (isDone) {
                 a = endResult;
                 onScreen += btnSelection;
@@ -154,9 +141,9 @@ btn.addEventListener('click', (event) => {
                 b = ""; // for swapping operator logic
             }
         } 
-        // check for equal sign to call operate and display result on screen 
+        // check for equal sign - If so, then, call operate and display result on screen 
         if (toExecute) {
-            operate(operator, a, b);
+            // display result and store result for next calculation if computed
             endResult = operate(operator, a, b);
             isDone = true;
         } else {
