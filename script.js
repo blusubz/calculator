@@ -155,11 +155,16 @@ btn.addEventListener('click', (event) => {
             }
         } 
 
+        // TODO: Fix backspace logic // not functianal just yet, still has bugs
         // Backspace logic goes here
         if (isBackspace) { 
-            backspace = digit.slice(0, -1); // code to remove previous input in buffer
+            backspace = digit.toString().slice(0, -1); // code to remove previous input in buffer
             digit = backspace;
-            onScreen = backspace;
+            onScreen = digit;
+
+            if (digit === "") {
+                onScreen = "0";
+            }
         } 
         
         // check for equal sign - If so, then, call operate and display result on screen 
