@@ -7,7 +7,7 @@ let operator = "";
 let onScreen = "";
 let result = "";
 let currentResult = "";
-let decimalCounter = 0;
+let backspace = "";
 let btn = document.querySelector('.btnContainer');
 let display = document.querySelector('h1');
 let isDone = false;
@@ -103,12 +103,7 @@ btn.addEventListener('click', (event) => {
             return;
         }
 
-        // TODO: Backspace logic goes here
-        if (isBackspace) { // Remove to revert
-            console.log('BACKSPACE CLICKED')
-            digit = digit.slice(0, -1);
-            console.log(`backspace: ${digit}`);
-        } // REMOVE to revert
+
 
         if (isDigit) {
             // check if a new digit is pressed after result displayed then clear calculator 
@@ -159,6 +154,14 @@ btn.addEventListener('click', (event) => {
                 b = ""; // for swapping operator logic
             }
         } 
+
+        // Backspace logic goes here
+        if (isBackspace) { 
+            backspace = digit.slice(0, -1); // code to remove previous input in buffer
+            digit = backspace;
+            onScreen = backspace;
+        } 
+        
         // check for equal sign - If so, then, call operate and display result on screen 
         if (toExecute) {
             // display result and store result for next calculation if computed
