@@ -103,6 +103,13 @@ btn.addEventListener('click', (event) => {
             return;
         }
 
+        // TODO: Backspace logic goes here
+        if (isBackspace) { // Remove to revert
+            console.log('BACKSPACE CLICKED')
+            digit = digit.slice(0, -1);
+            console.log(`backspace: ${digit}`);
+        } // REMOVE to revert
+
         if (isDigit) {
             // check if a new digit is pressed after result displayed then clear calculator 
             if (isDone && isDigit) {
@@ -117,18 +124,13 @@ btn.addEventListener('click', (event) => {
                 // Concatenate the Screen display 
                 onScreen += btnSelection;
             } 
-            // TODO: Backspace logic goes here
-            if (isBackspace) { // Remove to revert
-                console.log('BACKSPACE CLICKED')
-                digit = digit.slice(0, -1);
-                console.log(`backspace: ${digit}`);
-            } // REMOVE to revert
 
             if (operator === "") {
                 a = +digit;
             } else {
                 b = +digit;
             }
+
         } else if (isOperator) {
             // If computation started (by clicking new operator) after having a result displayed
             if (isDone) {
