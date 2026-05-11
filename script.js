@@ -95,7 +95,7 @@ btn.addEventListener('click', (event) => {
         let toExecute = event.target.classList.contains('executor');
         let isDecimal = event.target.value === '.';
         let toClear = event.target.value === 'clear';
-        let isBackspace = event.target.id === 'backspace';
+        let isBackspace = event.target.id === 'Backspace';
         let btnSelection = event.target.value; // a button was clicked and stored
 
         // Calculator flow
