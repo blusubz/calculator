@@ -110,6 +110,7 @@ btn.addEventListener('click', (event) => {
 
             if (isDone) {
                 resetCalculator();
+                isDone = false;
                 return;
             }
 
