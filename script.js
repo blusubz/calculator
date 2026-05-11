@@ -12,6 +12,7 @@ let btn = document.querySelector('.btnContainer');
 let display = document.querySelector('h1');
 let isDone = false;
 
+// Arithmetic functions 
 function add(a, b) {
     return Number((a + b).toFixed(3));
 }
@@ -103,7 +104,43 @@ btn.addEventListener('click', (event) => {
             return;
         }
 
+        // TODO: Fix backspace logic // not functianal just yet, still has bugs
+        // Backspace logic goes here
+        if (isBackspace) { 
 
+            if (isDone) {
+                resetCalculator();
+                return;
+            }
+
+            if (b !== "") {
+                digit = digit.toString().slice(0, -1); // code to remove previous input in buffer
+                onScreen = onScreen.toString().slice(0, -1);
+                b = +digit;
+            } else if (operator !== "") {
+                onScreen = onScreen.toString().slice(0, -1);
+                operator = "";
+                digit = a.toString(); // backspacing into a buffer
+                              
+            } else if (a !== "") {
+                digit = digit.toString().slice(0, -1); // code to remove previous input in buffer
+                onScreen = onScreen.toString().slice(0, -1);
+                a = +digit;  
+
+            }
+            // always display 0 if backspace deletes everything on screen and fully wipe the buffers 
+            if (onScreen === "") {
+                screenDisplay("0");
+                // starting calculation over so we reset these variables
+                a = ""; 
+                digit = "";
+                b = "";
+                operator = "";
+                prevOperator = "";
+            } else screenDisplay(onScreen);
+
+            return;
+        } 
 
         if (isDigit) {
             // check if a new digit is pressed after result displayed then clear calculator 
@@ -152,18 +189,6 @@ btn.addEventListener('click', (event) => {
                 onScreen += btnSelection;
                 digit = "";
                 b = ""; // for swapping operator logic
-            }
-        } 
-
-        // TODO: Fix backspace logic // not functianal just yet, still has bugs
-        // Backspace logic goes here
-        if (isBackspace) { 
-            backspace = digit.toString().slice(0, -1); // code to remove previous input in buffer
-            digit = backspace;
-            onScreen = digit;
-
-            if (digit === "") {
-                onScreen = "0";
             }
         } 
         
