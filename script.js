@@ -94,7 +94,7 @@ btn.addEventListener('click', (event) => {
         let isOperator = event.target.classList.contains('operator');
         let toExecute = event.target.classList.contains('executor');
         let isDecimal = event.target.value === '.';
-        let toClear = event.target.value === 'clear';
+        let toClear = event.target.value === 'Escape';
         let isBackspace = event.target.id === 'Backspace';
         let btnSelection = event.target.value; // a button was clicked and stored
 
@@ -104,10 +104,9 @@ btn.addEventListener('click', (event) => {
             return;
         }
 
-        // TODO: Fix backspace logic // not functianal just yet, still has bugs
-        // Backspace logic goes here
+        // Backspace logic 
         if (isBackspace) { 
-
+            // Condition checks if current result displayed on screen. If so hitting backspace clears the display and all buffers
             if (isDone) {
                 resetCalculator();
                 isDone = false;
@@ -202,4 +201,25 @@ btn.addEventListener('click', (event) => {
             screenDisplay(onScreen);
         }
     } 
+});
+
+
+document.addEventListener('keydown', event => {
+    console.log(`Key pressed: ${event.key}`);
+
+    let key = event.key;
+
+    // Map Enter and "=" - Pressing either key will give same effect
+    if (key === "Enter") {
+        key = "=";
+    }
+
+    // Find the button w/ matching ID
+    let button = document.getElementById(key);
+
+    if (button) {
+        // Prevent default browser behavior (like crolling or focus jumps)
+        event.preventDefault();
+        button.click(); // Triggers existing click listener
+    }
 });
