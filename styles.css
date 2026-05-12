@@ -20,14 +20,13 @@ h1 {
     color: green;
 }
 
-/* Ensure the containter has the gap to match our calc math */
+/* Ensure the container has the gap to match our calc math */
 .btnContainer {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     gap: 8px; /* Must match the 8px in the width calc */
-    width: 100%; /* Container takes full width =]*/
 }
 
 button {
