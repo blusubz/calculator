@@ -8,7 +8,7 @@
 
 body {
     background-color: black;
-    color: white;
+    font-family: 'Dosis', sans-serif;
 }
 
 
@@ -17,11 +17,45 @@ h1 {
     margin: 10px;
     padding: 4px;
     text-align: right;
+    color: green;
+}
+
+/* Ensure the containter has the gap to match our calc math */
+.btnContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px; /* Must match the 8px in the width calc */
+    width: 100%; /* Container takes full width =]*/
 }
 
 button {
-    background-color: gray;
-    color: purple;
-    padding: 18px;
-    font-size: 20px;
+    background-color: #1A1A1A;
+    color: white;
+    padding: 24px;
+    font-size: 32px;
+    border-radius: 16px;
+
+    /* Each button takes 1/4th of the row  & makes 4 buttons fit in a row*/
+    width: calc(25% - 8px);
+}
+
+/* Make the AC button (Escape) double-width */
+#Escape {
+    width: calc(50% - 8px);
+    color: red;
+}
+
+.executor {
+    background-color: green;
+}
+
+.operator {
+    color: green;
+}
+
+/* Make the 0 button double-width*/
+[id="0"] {
+    width: calc(50% - 8px);
 }
