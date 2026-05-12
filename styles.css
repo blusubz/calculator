@@ -15,9 +15,11 @@ body {
 h1 {
     border: 2px solid red;
     margin: 10px;
-    padding: 4px;
+    /* padding: 4px; */
+    padding: 20px ;
     text-align: right;
     color: green;
+    font-size: 48px;
 }
 
 /* Ensure the container has the gap to match our calc math */
@@ -26,6 +28,7 @@ h1 {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    /* align-content: center; */
     gap: 8px; /* Must match the 8px in the width calc */
 }
 
